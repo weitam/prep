@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using prep.utility;
 
 namespace prep.collections
 {
@@ -14,16 +15,18 @@ namespace prep.collections
 
     public IEnumerable<Movie> all_movies()
     {
-      foreach (var movie in movies)
-      {
-        yield return movie;
-      }
+      return movies.one_at_a_time();
     }
 
     public void add(Movie movie)
     {
-      if (movies.Contains(movie)) return;
+      if (already_contains(movie)) return;
       movies.Add(movie);
+    }
+
+    bool already_contains(Movie movie)
+    {
+      return movies.Contains(movie);
     }
 
     public IEnumerable<Movie> sort_all_movies_by_title_descending()
@@ -31,52 +34,35 @@ namespace prep.collections
       throw new NotImplementedException();
     }
 
-    private IEnumerable<Movie> search_movies_by_criteria(params Predicate<Movie>[] criteria)
+    private IEnumerable<Movie> search_movies_by_criteria(MovieCondition condition)
     {
-      foreach (var movie in movies)
-      {
-        var match = true;
-        foreach (var criterion in criteria)
-        {
-          if (criterion(movie)) continue;
-          match = false;
-          break;
-        }
-        if (match) yield return movie;
-      }
+      return movies.all_items_matching();
     }
 
     public IEnumerable<Movie> all_movies_published_by_pixar()
     {
-      return search_movies_by_criteria(m => m.production_studio == ProductionStudio.Pixar);
+      return search_movies_by_criteria(x => x.production_studio == ProductionStudio.Pixar);
+    }
+
+    bool is_published_by_pixar(Movie movie)
+    {
+      return movie.production_studio == ProductionStudio.Pixar;
     }
 
     public IEnumerable<Movie> all_movies_published_by_pixar_or_disney()
     {
-      return
-        search_movies_by_criteria(
-          m => m.production_studio == ProductionStudio.Pixar 
-            || m.production_studio == ProductionStudio.Disney);
-    }
-
-    public IEnumerable<Movie> sort_all_movies_by_title_ascending()
-    {
-      throw new NotImplementedException();
-    }
-
-    public IEnumerable<Movie> sort_all_movies_by_movie_studio_and_year_published()
-    {
-      throw new NotImplementedException();
-    }
-
-    public IEnumerable<Movie> all_movies_not_published_by_pixar()
-    {
-      return search_movies_by_criteria(m => m.production_studio != ProductionStudio.Pixar);
+      return search_movies_by_criteria(x => x.production_studio == ProductionStudio.Pixar ||
+        x.production_studio == ProductionStudio.Disney);
     }
 
     public IEnumerable<Movie> all_movies_published_after(int year)
     {
       return search_movies_by_criteria(m => m.date_published.Year > year);
+    }
+
+    public IEnumerable<Movie> all_movies_not_published_by_pixar()
+    {
+      return search_movies_by_criteria(m => m.production_studio != ProductionStudio.Pixar);
     }
 
     public IEnumerable<Movie> all_movies_published_between_years(int startingYear, int endingYear)
@@ -100,6 +86,16 @@ namespace prep.collections
     }
 
     public IEnumerable<Movie> sort_all_movies_by_date_published_ascending()
+    {
+      throw new NotImplementedException();
+    }
+
+    public IEnumerable<Movie> sort_all_movies_by_title_ascending()
+    {
+      throw new NotImplementedException();
+    }
+
+    public IEnumerable<Movie> sort_all_movies_by_movie_studio_and_year_published()
     {
       throw new NotImplementedException();
     }

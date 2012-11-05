@@ -4,7 +4,8 @@ namespace prep.collections
 {
   public class Movie : IEquatable<Movie>
   {
-    private string _title;
+    string _title;
+
     public string title
     {
       get { return _title ?? String.Empty; }
@@ -15,10 +16,22 @@ namespace prep.collections
     public Genre genre { get; set; }
     public int rating { get; set; }
     public DateTime date_published { get; set; }
+
     public bool Equals(Movie other)
     {
       if (other == null) return false;
-      return title == other.title;
+
+      return ReferenceEquals(this,other) || title == other.title;
+    }
+
+    public override bool Equals(object obj)
+    {
+      return Equals(obj as Movie);
+    }
+
+    public override int GetHashCode()
+    {
+      return this.title.GetHashCode();
     }
   }
 }
