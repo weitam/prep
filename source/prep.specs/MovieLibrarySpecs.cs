@@ -75,7 +75,6 @@ namespace prep.specs
 
     public class when_counting_the_number_of_movies : movie_library_concern
     {
-
       static int number_of_movies;
 
       Establish c = () =>
@@ -131,7 +130,7 @@ namespace prep.specs
         spec.exception_thrown.ShouldBeAn<InvalidCastException>();
     }
 
-    public class when_iterating  : movie_library_concern
+    public class when_iterating : movie_library_concern
     {
       static Movie movie;
 
@@ -149,6 +148,7 @@ namespace prep.specs
 
       static IEnumerable<Movie> results;
     }
+
     public class when_adding_a_movie_to_the_library : movie_library_concern
     {
       static Movie movie;
@@ -219,7 +219,8 @@ namespace prep.specs
 
       It should_be_able_to_find_all_movies_published_by_pixar_or_disney = () =>
       {
-        var criteria = Where<Movie>.has_a(x => x.production_studio).equal_to_any(ProductionStudio.Pixar,ProductionStudio.Disney);
+        var criteria = Where<Movie>.has_a(x => x.production_studio).equal_to_any(ProductionStudio.Pixar,
+                                                                                 ProductionStudio.Disney);
 
         var results = sut.all_movies().all_items_matching(criteria);
 
@@ -246,7 +247,7 @@ namespace prep.specs
 
       It should_be_able_to_find_all_movies_published_between_a_certain_range_of_years = () =>
       {
-        var criteria = Where<Movie>.has_an(x => x.date_published.Year).between(1982,2003);
+        var criteria = Where<Movie>.has_an(x => x.date_published.Year).between(1982, 2003);
 
         var results = sut.all_movies().all_items_matching(criteria);
 

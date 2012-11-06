@@ -1,15 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace prep.utility.filtering
 {
-  public class ComparableMatchFactory<ItemToFind, PropertyType> where PropertyType : IComparable<PropertyType>
+  public class ComparableMatchFactory<ItemToFind, PropertyType> : ICreateMatchers<ItemToFind, PropertyType>
+    where PropertyType : IComparable<PropertyType>
   {
     PropertyAccessor<ItemToFind, PropertyType> accessor;
+    ICreateMatchers<ItemToFind, PropertyType> original;
 
-    public ComparableMatchFactory(PropertyAccessor<ItemToFind, PropertyType> accessor)
+    public ComparableMatchFactory(PropertyAccessor<ItemToFind, PropertyType> accessor, 
+      ICreateMatchers<ItemToFind, PropertyType> original)
     {
       this.accessor = accessor;
+      this.original = original;
     }
 
     public IMatchAn<ItemToFind> greater_than(PropertyType value)
@@ -25,18 +28,17 @@ namespace prep.utility.filtering
 
     public IMatchAn<ItemToFind> equal_to(PropertyType value_to_equal)
     {
-        return new MatchFactory<ItemToFind, PropertyType>(accessor).equal_to(value_to_equal);
+      return original.equal_to(value_to_equal);
     }
 
     public IMatchAn<ItemToFind> equal_to_any(params PropertyType[] values)
     {
-        return new MatchFactory<ItemToFind, PropertyType>(accessor).equal_to_any(values);
+      return original.equal_to_any(values);
     }
 
     public IMatchAn<ItemToFind> not_equal_to(PropertyType value)
     {
-        return new MatchFactory<ItemToFind, PropertyType>(accessor).not_equal_to(value).not();
+      return original.not_equal_to(value);
     }
-    
   }
 }
