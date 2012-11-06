@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 
 namespace prep.utility.filtering
 {
-  public class MatchFactory<ItemToFind, PropertyType> 
+  public class MatchFactory<ItemToFind, PropertyType>
   {
     PropertyAccessor<ItemToFind, PropertyType> accessor;
 
@@ -26,6 +25,5 @@ namespace prep.utility.filtering
     {
       return equal_to(value).not();
     }
-
   }
 }

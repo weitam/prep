@@ -1,5 +1,4 @@
 ﻿using System;
-using prep.collections;
 
 namespace prep.utility.filtering
 {
@@ -17,9 +16,10 @@ namespace prep.utility.filtering
       return new AnonymousCondition<ItemToFind>(x => accessor(x).CompareTo(value) > 0);
     }
 
-    public IMatchAn<ItemToFind> between(PropertyType start,PropertyType end)
+    public IMatchAn<ItemToFind> between(PropertyType start, PropertyType end)
     {
-      return new AnonymousCondition<ItemToFind>(x => accessor(x).CompareTo(start) >= 0 && accessor(x).CompareTo(end) <= 0);
+      return
+        new AnonymousCondition<ItemToFind>(x => accessor(x).CompareTo(start) >= 0 && accessor(x).CompareTo(end) <= 0);
     }
   }
 }
