@@ -19,7 +19,7 @@ namespace prep.utility.filtering
 
     public IMatchAn<ItemToFind> between(PropertyType start,PropertyType end)
     {
-      throw new NotImplementedException();
+      return new AnonymousCondition<ItemToFind>(x => accessor(x).CompareTo(start) >= 0 && accessor(x).CompareTo(end) <= 0);
     }
   }
 }
