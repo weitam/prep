@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace prep.utility.filtering
 {
@@ -21,5 +22,21 @@ namespace prep.utility.filtering
       return
         new AnonymousCondition<ItemToFind>(x => accessor(x).CompareTo(start) >= 0 && accessor(x).CompareTo(end) <= 0);
     }
+
+    public IMatchAn<ItemToFind> equal_to(PropertyType value_to_equal)
+    {
+        return new MatchFactory<ItemToFind, PropertyType>(accessor).equal_to(value_to_equal);
+    }
+
+    public IMatchAn<ItemToFind> equal_to_any(params PropertyType[] values)
+    {
+        return new MatchFactory<ItemToFind, PropertyType>(accessor).equal_to_any(values);
+    }
+
+    public IMatchAn<ItemToFind> not_equal_to(PropertyType value)
+    {
+        return new MatchFactory<ItemToFind, PropertyType>(accessor).not_equal_to(value).not();
+    }
+    
   }
 }
