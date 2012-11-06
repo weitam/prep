@@ -1,17 +1,12 @@
 using System;
+using prep.utility;
+using prep.utility.filtering;
 
 namespace prep.collections
 {
   public class Movie : IEquatable<Movie>
   {
-    string _title;
-
-    public string title
-    {
-      get { return _title ?? String.Empty; }
-      set { _title = value; }
-    }
-
+    public string title { get; set; }
     public ProductionStudio production_studio { get; set; }
     public Genre genre { get; set; }
     public int rating { get; set; }
@@ -21,7 +16,7 @@ namespace prep.collections
     {
       if (other == null) return false;
 
-      return ReferenceEquals(this,other) || title == other.title;
+      return ReferenceEquals(this, other) || title == other.title;
     }
 
     public override bool Equals(object obj)
@@ -32,6 +27,22 @@ namespace prep.collections
     public override int GetHashCode()
     {
       return this.title.GetHashCode();
+    }
+
+    public static IMatchAn<Movie> is_in_genre(Genre genre)
+    {
+      return new IsInGenre(genre);
+    }
+
+    public static IMatchAn<Movie> is_published_by(ProductionStudio studio)
+    {
+      return new IsPublishedBy(studio);
+    }
+
+    public static IMatchAn<Movie> is_published_by_pixar_or_disney()
+    {
+      return is_published_by(ProductionStudio.Pixar)
+        .or(is_published_by(ProductionStudio.Disney));
     }
   }
 }

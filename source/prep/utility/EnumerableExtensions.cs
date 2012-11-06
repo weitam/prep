@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using prep.collections;
+using prep.utility.filtering;
 
 namespace prep.utility
 {
@@ -10,10 +10,15 @@ namespace prep.utility
       foreach (var item in items) yield return item;
     }
 
-    public static IEnumerable<Item> all_items_matching<Item>(this IEnumerable<Item> items,Condition<Item> condition)
+    static IEnumerable<Item> all_items_matching<Item>(this IEnumerable<Item> items, Condition<Item> condition)
     {
       foreach (var item in items)
         if (condition(item)) yield return item;
+    }
+
+    public static IEnumerable<Item> all_items_matching<Item>(this IEnumerable<Item> items, IMatchAn<Item> criteria)
+    {
+      return items.all_items_matching(criteria.matches);
     }
   }
 }

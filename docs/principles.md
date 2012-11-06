@@ -12,3 +12,7 @@
 
 5. OCP (Open Closed Principle) - A component should be open for extension and closed for modification.
 
+6. DRY (Don't Repeat Yourself)
+
+7. Favour composition over inheritance
+
