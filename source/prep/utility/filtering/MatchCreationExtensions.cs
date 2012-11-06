@@ -17,12 +17,6 @@ namespace prep.utility.filtering
             return create_using(extension_point, new EqualToAny<PropertyType>(values));
         }
 
-        public static IMatchAn<ItemToFind> not_equal_to<ItemToFind, PropertyType>(
-            this MatchCreationExtensionPoint<ItemToFind, PropertyType> extension_point, PropertyType value)
-        {
-            return equal_to(extension_point, value).not();
-        }
-
         public static IMatchAn<ItemToFind> create_using<ItemToFind, PropertyType>(
             this MatchCreationExtensionPoint<ItemToFind, PropertyType> extension_point,
             IMatchAn<PropertyType> real_criteria)
@@ -53,12 +47,6 @@ namespace prep.utility.filtering
                                 new FallsInRange<PropertyType>(new InclusiveRange<PropertyType>(start, end)));
         }
 
-        public static IMatchAn<ItemToFind> between<ItemToFind, PropertyType>(this MatchCreationExtensionPoint<ItemToFind, PropertyType> extension_point, int start, int end) where PropertyType : IComparable<PropertyType> 
-        {
-
-            return create_using(extension_point,
-                                new FallsInRange<PropertyType>(new DateYearRange<PropertyType>(start, end)));
-        }
     }
 
    

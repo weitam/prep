@@ -8,5 +8,10 @@ namespace prep.utility.filtering
     {
       this.accessor = accessor;
     }
+
+    public object not
+    {
+      get { throw new System.NotImplementedException(); }
+    }
   }
 }

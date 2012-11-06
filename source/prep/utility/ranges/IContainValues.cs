@@ -39,7 +39,7 @@ namespace prep.utility.ranges
     }
   }
 
-  public class DateYearRange<DateTime> : IContainValues<DateTime>
+  public class DateYearRange: IContainValues<DateTime>
   {
       readonly int _start;
       readonly int _end;
@@ -50,7 +50,7 @@ namespace prep.utility.ranges
           _end = end;
       }
 
-      public bool contains(T value)
+      public bool contains(DateTime value)
       {
           return value.Year
       }

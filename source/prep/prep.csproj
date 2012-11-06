@@ -66,6 +66,7 @@
     <Compile Include="collections\MovieLibrary.cs" />
     <Compile Include="collections\ProductionStudio.cs" />
     <Compile Include="collections\ReadOnlySetOf.cs" />
+    <Compile Include="utility\filtering\DateMatchCreationExtensions.cs" />
     <Compile Include="utility\filtering\EqualToAny.cs" />
     <Compile Include="utility\filtering\FallsInRange.cs" />
     <Compile Include="utility\filtering\MatchCreationExtensionPoint.cs" />
