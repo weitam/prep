@@ -1,4 +1,5 @@
 #!/bin/bash
 
+./fetch_latest
 taskkill -IM devenv.exe
 sln
