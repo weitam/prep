@@ -9,3 +9,5 @@
 4. Composite - treat a set of items as a uniform item
 
 5. Special Case/Null Object
+
+6. Decorator - Adding behaviour to an existing component without changing the code in that component.

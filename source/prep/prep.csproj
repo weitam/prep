@@ -66,6 +66,9 @@
     <Compile Include="collections\MovieLibrary.cs" />
     <Compile Include="collections\ProductionStudio.cs" />
     <Compile Include="collections\ReadOnlySetOf.cs" />
+    <Compile Include="utility\filtering\ComparableMatchFactory.cs" />
+    <Compile Include="utility\filtering\MatchFactory.cs" />
+    <Compile Include="utility\filtering\NegatingMatch.cs" />
     <Compile Include="utility\filtering\NeverMatches.cs" />
     <Compile Include="utility\filtering\PropertyAccessor.cs" />
     <Compile Include="utility\filtering\AnonymousCondition.cs" />
