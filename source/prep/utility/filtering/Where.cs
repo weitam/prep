@@ -1,11 +1,11 @@
 namespace prep.utility.filtering
 {
-  public class Where<ItemToFind>
+  public class Where<TItemToFind>
   {
-    public static SpecificationFeatureExtensionPoint<ItemToFind, PropertyType> has_a<PropertyType>(
-      PropertyAccessor<ItemToFind, PropertyType> accessor)
+    public static MatchCreationExtensionPoint<TItemToFind, TPropertyType> has_a<TPropertyType>(
+      PropertyAccessor<TItemToFind, TPropertyType> accessor)
     {
-      return new SpecificationFeatureExtensionPoint<ItemToFind, PropertyType>(accessor);
+      return new MatchCreationExtensionPoint<TItemToFind, TPropertyType>(accessor);
     }
   }
 }
