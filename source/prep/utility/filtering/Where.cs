@@ -25,9 +25,18 @@ namespace prep.utility.filtering
       return new AnonymousCondition<ItemToFind>(x => accessor(x).Equals(value_to_equal));
     }
 
-    public IMatchAn<ItemToFind> equal_to_any(params PropertyType[] value)
+    public IMatchAn<ItemToFind> equal_to_any(params PropertyType[] values)
     {
-      throw new System.NotImplementedException();
+      return new AnonymousCondition<ItemToFind>(x =>
+                                                  {
+                                                    var result = false;
+                                                    foreach (var value in values)
+                                                    {
+                                                      result = result || accessor(x).Equals(value);
+                                                    }
+                                                    return result;
+                                                  });
+
     }
   }
 }
