@@ -69,9 +69,11 @@
     <Compile Include="utility\filtering\DateMatchCreationExtensions.cs" />
     <Compile Include="utility\filtering\EqualToAny.cs" />
     <Compile Include="utility\filtering\FallsInRange.cs" />
+    <Compile Include="utility\filtering\IProvideAccessToCreatingMatchers.cs" />
     <Compile Include="utility\filtering\MatchCreationExtensionPoint.cs" />
     <Compile Include="utility\filtering\MatchCreationExtensions.cs" />
     <Compile Include="utility\filtering\NegatingMatch.cs" />
+    <Compile Include="utility\filtering\NegatingMatchCreationExtensionPoint.cs" />
     <Compile Include="utility\filtering\NeverMatches.cs" />
     <Compile Include="utility\filtering\PropertyAccessor.cs" />
     <Compile Include="utility\filtering\AnonymousCondition.cs" />
