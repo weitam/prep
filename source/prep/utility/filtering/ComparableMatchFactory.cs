@@ -7,23 +7,24 @@ namespace prep.utility.filtering
   {
     PropertyAccessor<ItemToFind, PropertyType> accessor;
     ICreateMatchers<ItemToFind, PropertyType> original;
+      readonly IAnonymousConditionBuilder<ItemToFind> _builder;
 
-    public ComparableMatchFactory(PropertyAccessor<ItemToFind, PropertyType> accessor, 
-      ICreateMatchers<ItemToFind, PropertyType> original)
+      public ComparableMatchFactory(PropertyAccessor<ItemToFind, PropertyType> accessor, 
+      ICreateMatchers<ItemToFind, PropertyType> original, IAnonymousConditionBuilder<ItemToFind> builder)
     {
       this.accessor = accessor;
       this.original = original;
+        _builder = builder;
     }
 
     public IMatchAn<ItemToFind> greater_than(PropertyType value)
     {
-      return new AnonymousCondition<ItemToFind>(x => accessor(x).CompareTo(value) > 0);
+      return _builder.Build(x => accessor(x).CompareTo(value) > 0);
     }
 
     public IMatchAn<ItemToFind> between(PropertyType start, PropertyType end)
     {
-      return
-        new AnonymousCondition<ItemToFind>(x => accessor(x).CompareTo(start) >= 0 && accessor(x).CompareTo(end) <= 0);
+      return _builder.Build(x => accessor(x).CompareTo(start) >= 0 && accessor(x).CompareTo(end) <= 0);
     }
 
     public IMatchAn<ItemToFind> equal_to(PropertyType value_to_equal)
@@ -40,5 +41,22 @@ namespace prep.utility.filtering
     {
       return original.not_equal_to(value);
     }
+
+   
   }
+
+    public interface IAnonymousConditionBuilder<ItemToFind>
+    {
+        IMatchAn<ItemToFind> Build(Condition<ItemToFind> condition);
+    }
+
+    public class AnonymousConditionBuilder<ItemToFind> : IAnonymousConditionBuilder<ItemToFind>
+    {
+        public IMatchAn<ItemToFind> Build(Condition<ItemToFind> condition)
+        {
+            return new AnonymousCondition<ItemToFind>(condition);
+        }
+    }
+
+   
 }
