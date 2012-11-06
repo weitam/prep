@@ -1,0 +1,62 @@
+Microsoft (R) Visual C# 2010 Compiler version 4.0.30319.1
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+source\prep.specs\MovieLibrarySpecs.cs(135,20): warning CS0169: The field 'prep.specs.MovieLibrarySpecs.when_iterating.movie' is never used
+
+Specs in prep.specs:
+
+MovieLibrary, when counting the number of movies
+¯ should return the number of all movies in the library
+
+MovieLibrary, when asked for all of the movies
+¯ should receive a set containing each movie in the library
+
+MovieLibrary, when trying to change the set of movies returned by the movie library to a mutable type
+¯ should get an invalid cast exception
+
+MovieLibrary, when iterating
+¯ should iterate
+
+MovieLibrary, when adding a movie to the library
+¯ should store it in the movie collection
+
+MovieLibrary, when adding an existing movie in the collection again
+¯ should not restore the movie in the collection
+
+MovieLibrary, when adding two different copies of the same movie
+¯ should store only 1 copy in the collection
+
+MovieLibrary, when searching for movies
+¯ should be able to find all movies published by pixar
+¯ should be able to find all movies published by pixar or disney
+¯ should be able to find all movies not published by pixar
+¯ should be able to find all movies published after a certain year
+¯ should be able to find all movies published between a certain range of years
+¯ should be able to find all kid movies
+¯ should be able to find all action movies
+
+MovieLibrary, when sorting movies
+¯ should be able to sort all movies by title descending (FAIL)
+System.NotImplementedException: The method or operation is not implemented.
+   at prep.specs.MovieLibrarySpecs.when_sorting_movies.<.ctor>b__57()
+   at Machine.Specifications.Model.Specification.Verify()
+¯ should be able to sort all movies by title ascending (FAIL)
+System.NotImplementedException: The method or operation is not implemented.
+   at prep.specs.MovieLibrarySpecs.when_sorting_movies.<.ctor>b__58()
+   at Machine.Specifications.Model.Specification.Verify()
+¯ should be able to sort all movies by date published descending (FAIL)
+System.NotImplementedException: The method or operation is not implemented.
+   at prep.specs.MovieLibrarySpecs.when_sorting_movies.<.ctor>b__59()
+   at Machine.Specifications.Model.Specification.Verify()
+¯ should be able to sort all movies by date published ascending (FAIL)
+System.NotImplementedException: The method or operation is not implemented.
+   at prep.specs.MovieLibrarySpecs.when_sorting_movies.<.ctor>b__5a()
+   at Machine.Specifications.Model.Specification.Verify()
+¯ should be able to sort all movies by studio rating and year published (FAIL)
+System.NotImplementedException: The method or operation is not implemented.
+   at prep.specs.MovieLibrarySpecs.when_sorting_movies.<.ctor>b__5b()
+   at Machine.Specifications.Model.Specification.Verify()
+
+Contexts: 9, Specifications: 19, Time: 0.40 seconds
+  14 passed, 5 failed
+********************You may want to consider changing the value of the setting remotes in the file c:/course/prep/build/support/002_configuration/git.rb*********************************
