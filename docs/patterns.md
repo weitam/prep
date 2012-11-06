@@ -7,3 +7,5 @@
 3. Specification - Determine whether an item meets a certain condition
 
 4. Composite - treat a set of items as a uniform item
+
+5. Special Case/Null Object
