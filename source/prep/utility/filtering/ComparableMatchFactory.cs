@@ -1,4 +1,5 @@
 ﻿using System;
+using prep.utility.ranges;
 
 namespace prep.utility.filtering
 {
@@ -7,24 +8,22 @@ namespace prep.utility.filtering
   {
     PropertyAccessor<ItemToFind, PropertyType> accessor;
     ICreateMatchers<ItemToFind, PropertyType> original;
-      readonly IAnonymousConditionBuilder<ItemToFind> _builder;
 
-      public ComparableMatchFactory(PropertyAccessor<ItemToFind, PropertyType> accessor, 
-      ICreateMatchers<ItemToFind, PropertyType> original, IAnonymousConditionBuilder<ItemToFind> builder)
+    public ComparableMatchFactory(PropertyAccessor<ItemToFind, PropertyType> accessor,
+                                  ICreateMatchers<ItemToFind, PropertyType> original)
     {
       this.accessor = accessor;
       this.original = original;
-        _builder = builder;
     }
 
     public IMatchAn<ItemToFind> greater_than(PropertyType value)
     {
-      return _builder.Build(x => accessor(x).CompareTo(value) > 0);
+      return create_using(new FallsInRange<PropertyType>(new RangeWithNoUpperBound<PropertyType>(value)));
     }
 
     public IMatchAn<ItemToFind> between(PropertyType start, PropertyType end)
     {
-      return _builder.Build(x => accessor(x).CompareTo(start) >= 0 && accessor(x).CompareTo(end) <= 0);
+      return create_using(new FallsInRange<PropertyType>(new InclusiveRange<PropertyType>(start, end)));
     }
 
     public IMatchAn<ItemToFind> equal_to(PropertyType value_to_equal)
@@ -42,21 +41,14 @@ namespace prep.utility.filtering
       return original.not_equal_to(value);
     }
 
-   
+    public IMatchAn<ItemToFind> create_from(Condition<ItemToFind> condition)
+    {
+      return original.create_from(condition);
+    }
+
+    public IMatchAn<ItemToFind> create_using(IMatchAn<PropertyType> real_criteria)
+    {
+      return original.create_using(real_criteria);
+    }
   }
-
-    public interface IAnonymousConditionBuilder<ItemToFind>
-    {
-        IMatchAn<ItemToFind> Build(Condition<ItemToFind> condition);
-    }
-
-    public class AnonymousConditionBuilder<ItemToFind> : IAnonymousConditionBuilder<ItemToFind>
-    {
-        public IMatchAn<ItemToFind> Build(Condition<ItemToFind> condition)
-        {
-            return new AnonymousCondition<ItemToFind>(condition);
-        }
-    }
-
-   
 }

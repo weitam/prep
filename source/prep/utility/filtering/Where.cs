@@ -7,7 +7,7 @@ namespace prep.utility.filtering
     public static ComparableMatchFactory<ItemToFind, PropertyType> has_an<PropertyType>(
       PropertyAccessor<ItemToFind, PropertyType> accessor) where PropertyType : IComparable<PropertyType>
     {
-      return new ComparableMatchFactory<ItemToFind, PropertyType>(accessor,has_a(accessor), new AnonymousConditionBuilder<ItemToFind>());
+      return new ComparableMatchFactory<ItemToFind, PropertyType>(accessor,has_a(accessor));
     }
 
     public static MatchFactory<ItemToFind, PropertyType> has_a<PropertyType>(

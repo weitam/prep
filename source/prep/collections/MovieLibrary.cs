@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using prep.utility;
-using prep.utility.filtering;
 
 namespace prep.collections
 {
@@ -34,7 +33,6 @@ namespace prep.collections
     {
       throw new NotImplementedException();
     }
-
 
     public IEnumerable<Movie> sort_all_movies_by_date_published_descending()
     {

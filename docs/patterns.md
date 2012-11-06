@@ -11,3 +11,5 @@
 5. Special Case/Null Object
 
 6. Decorator - Adding behaviour to an existing component without changing the code in that component.
+
+7. Strategy - Swap implementations of a family of algorithms interchangeably so the client is not affected when you swap implementations.
