@@ -1,7 +1,7 @@
 namespace prep.utility.filtering
 {
-  public class MatchCreationExtensionPoint<TItemToFilter, TPropertyType> :
-    IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IMatchAn<TItemToFilter>>
+  public class MatchCreationExtensionPoint<TItemToFilter, TPropertyType, TReturnType> :
+    IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, TReturnType> 
   {
     PropertyAccessor<TItemToFilter, TPropertyType> accessor;
 
@@ -32,7 +32,7 @@ namespace prep.utility.filtering
       }
     }
 
-    public IMatchAn<TItemToFilter> creating_dsl_result_using(IMatchAn<TPropertyType> real_criteria)
+    public TReturnType creating_dsl_result_using(IMatchAn<TPropertyType> real_criteria)
     {
       return new PropertyMatch<TItemToFilter, TPropertyType>(accessor, real_criteria);
     }

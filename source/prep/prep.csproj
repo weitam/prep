@@ -67,6 +67,7 @@
     <Compile Include="collections\ProductionStudio.cs" />
     <Compile Include="collections\ReadOnlySetOf.cs" />
     <Compile Include="utility\filtering\DateMatchCreationExtensions.cs" />
+    <Compile Include="utility\filtering\EnumerableFilteringExtensionPoint.cs" />
     <Compile Include="utility\filtering\EnumerableFilteringExtensions.cs" />
     <Compile Include="utility\filtering\EqualToAny.cs" />
     <Compile Include="utility\filtering\FallsInRange.cs" />
