@@ -71,7 +71,7 @@
     <Compile Include="utility\filtering\EqualToAny.cs" />
     <Compile Include="utility\filtering\FallsInRange.cs" />
     <Compile Include="utility\filtering\IProvideAccessToCreatingMatchers.cs" />
-    <Compile Include="utility\filtering\MatchCreationExtensionPoint.cs" />
+    <Compile Include="utility\filtering\SpecificationFeatureExtensionPoint.cs" />
     <Compile Include="utility\filtering\MatchCreationExtensions.cs" />
     <Compile Include="utility\filtering\NegatingMatch.cs" />
     <Compile Include="utility\filtering\NegatingMatchCreationExtensionPoint.cs" />

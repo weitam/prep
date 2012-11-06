@@ -1,7 +1,7 @@
 namespace prep.utility.filtering
 {
-  public interface IProvideAccessToCreatingMatchers<ItemToFilter, PropertyType>
+  public interface IProvideAccessToCreatingMatchers<ItemToFilter, PropertyType,DSLReturnType>
   {
-    IMatchAn<ItemToFilter> create_match_using(IMatchAn<PropertyType> real_criteria);
+    DSLReturnType creating_dsl_result_using(IMatchAn<PropertyType> real_criteria);
   }
 }

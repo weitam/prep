@@ -1,44 +1,59 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace prep.utility.filtering
 {
   public static class EnumerableFilteringExtensions
   {
-    public static FilteringEnumerable<ItemToFilter, PropertyType> where<ItemToFilter, PropertyType>(
-      this IEnumerable<ItemToFilter> items,
+    public static EnumerableFilteringExtensionPoint<TItemToFilter, TPropertyType> where<TItemToFilter, TPropertyType>(
+      this IEnumerable<TItemToFilter> items,
       PropertyAccessor
-        <ItemToFilter, PropertyType> accessor)
+        <TItemToFilter, TPropertyType> accessor)
     {
-      return new FilteringEnumerable<ItemToFilter, PropertyType>(items, accessor);
+      return new EnumerableFilteringExtensionPoint<TItemToFilter, TPropertyType>(items,
+                                                                               Where<TItemToFilter>.has_a(accessor));
     }
   }
 
-  public class FilteringEnumerable<ItemToFilter, PropertyType> : IEnumerable<ItemToFilter>
+  public class EnumerableFilteringExtensionPoint<TItemToFilter, TPropertyType> :
+    IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IEnumerable<TItemToFilter>>
   {
-    IEnumerable<ItemToFilter> original_set;
-    PropertyAccessor<ItemToFilter, PropertyType> accessor;
+    IEnumerable<TItemToFilter> original_set;
+    IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IMatchAn<TItemToFilter>> match_creation_extension_point;
 
-    public FilteringEnumerable(IEnumerable<ItemToFilter> original_set,
-                               PropertyAccessor<ItemToFilter, PropertyType> accessor)
+    public EnumerableFilteringExtensionPoint(IEnumerable<TItemToFilter> original_set,
+                                             IProvideAccessToCreatingMatchers
+                                               <TItemToFilter, TPropertyType, IMatchAn<TItemToFilter>>
+                                               match_creation_extension_point)
     {
       this.original_set = original_set;
-      this.accessor = accessor;
+      this.match_creation_extension_point = match_creation_extension_point;
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
+    public IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IEnumerable<TItemToFilter>> not
     {
-      return GetEnumerator();
+      get { return new NegatingEnumerableFilteringExtensionPoint(this); }
     }
 
-    public IEnumerator<ItemToFilter> GetEnumerator()
+    class NegatingEnumerableFilteringExtensionPoint :
+      IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IEnumerable<TItemToFilter>>
     {
-      return original_set.GetEnumerator();
+      IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IEnumerable<TItemToFilter>> original;
+
+      public NegatingEnumerableFilteringExtensionPoint(
+        IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IEnumerable<TItemToFilter>> original)
+      {
+        this.original = original;
+      }
+
+      public IEnumerable<TItemToFilter> creating_dsl_result_using(IMatchAn<TPropertyType> real_criteria)
+      {
+        return original.creating_dsl_result_using(real_criteria.not());
+      }
     }
 
-    public IEnumerable<ItemToFilter> equal_to_any(params PropertyType[] values)
+    public IEnumerable<TItemToFilter> creating_dsl_result_using(IMatchAn<TPropertyType> real_criteria)
     {
-      return original_set.all_items_matching(Where<ItemToFilter>.has_a(accessor).equal_to_any(values));
+      return original_set.all_items_matching(match_creation_extension_point.creating_dsl_result_using(real_criteria));
     }
   }
 }
