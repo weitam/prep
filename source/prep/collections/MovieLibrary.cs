@@ -37,7 +37,7 @@ namespace prep.collections
 
     public IEnumerable<Movie> search_movies_by_criteria(Condition<Movie> condition)
     {
-      return movies.all_items_matching(new ConditionAdapter(condition));
+      return movies.all_items_matching(new AnonymousCondition<Movie>(condition));
     }
 
     public IEnumerable<Movie> all_movies_published_by_pixar()
