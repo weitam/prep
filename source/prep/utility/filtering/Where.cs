@@ -32,9 +32,11 @@ namespace prep.utility.filtering
       return new AnonymousCondition<ItemToFind>(x => new List<PropertyType>(values).Contains(accessor(x)));
     }
 
-    public IMatchAn<PropertyType> not_equal_to(PropertyType value)
+    public IMatchAn<ItemToFind> not_equal_to(PropertyType value)
     {
-      throw new System.NotImplementedException();
+      //  return !equal_to(value);
+      return new AnonymousCondition<ItemToFind>(x => { return !equal_to(value).matches(x); });
+      //return new AnonymousCondition<ItemToFind>(x => !accessor(x).Equals(value));
     }
   }
 }
