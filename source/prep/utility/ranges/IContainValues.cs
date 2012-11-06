@@ -38,4 +38,21 @@ namespace prep.utility.ranges
       return value.CompareTo(start) > 0;
     }
   }
+
+  public class DateYearRange<DateTime> : IContainValues<DateTime>
+  {
+      readonly int _start;
+      readonly int _end;
+      
+      public DateYearRange(int start, int end)
+      {
+          _start = start;
+          _end = end;
+      }
+
+      public bool contains(T value)
+      {
+          return value.Year
+      }
+  }
 }
