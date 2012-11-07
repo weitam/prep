@@ -9,8 +9,11 @@ namespace prep.utility.filtering
       PropertyAccessor<TTypeToSort, TPropertyTypeToSortOn> accessor,
       params TPropertyTypeToSortOn[] fixed_order)
     {
-      
+      return new PropertyComparer<TTypeToSort, TPropertyTypeToSortOn>(accessor,
+                                                                      new FixedComparer<TPropertyTypeToSortOn>(
+                                                                        fixed_order));
     }
+
     public static IComparer<TTypeToSort> by_descending<TPropertyTypeToSortOn>(
       PropertyAccessor<TTypeToSort, TPropertyTypeToSortOn> accessor)
       where TPropertyTypeToSortOn : IComparable<TPropertyTypeToSortOn>
@@ -22,23 +25,8 @@ namespace prep.utility.filtering
       PropertyAccessor<TTypeToSort, TPropertyTypeToSortOn> accessor)
       where TPropertyTypeToSortOn : IComparable<TPropertyTypeToSortOn>
     {
-      return new CustomComparer<TTypeToSort, TPropertyTypeToSortOn>(accessor);
-    }
-  }
-
-  public class CustomComparer<TTypeToSort, TPropertyTypeToSortOn> : IComparer<TTypeToSort>
-    where TPropertyTypeToSortOn : IComparable<TPropertyTypeToSortOn>
-  {
-    PropertyAccessor<TTypeToSort, TPropertyTypeToSortOn> accessor;
-
-    public CustomComparer(PropertyAccessor<TTypeToSort, TPropertyTypeToSortOn> accessor)
-    {
-      this.accessor = accessor;
-    }
-
-    public int Compare(TTypeToSort x, TTypeToSort y)
-    {
-      return accessor(x).CompareTo(accessor(y));
+      return new PropertyComparer<TTypeToSort, TPropertyTypeToSortOn>(accessor,
+                                                                      new ComparableComparer<TPropertyTypeToSortOn>());
     }
   }
 }

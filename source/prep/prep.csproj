@@ -66,8 +66,11 @@
     <Compile Include="collections\MovieLibrary.cs" />
     <Compile Include="collections\ProductionStudio.cs" />
     <Compile Include="collections\ReadOnlySetOf.cs" />
+    <Compile Include="utility\filtering\ComparableComparer.cs" />
     <Compile Include="utility\filtering\ComparerExtensions.cs" />
     <Compile Include="utility\filtering\DateMatchCreationExtensions.cs" />
+    <Compile Include="utility\filtering\FixedComparer.cs" />
+    <Compile Include="utility\filtering\PropertyComparer.cs" />
     <Compile Include="utility\filtering\ReverseComparer.cs" />
     <Compile Include="utility\filtering\EnumerableFilteringExtensionPoint.cs" />
     <Compile Include="utility\filtering\EnumerableFilteringExtensions.cs" />
