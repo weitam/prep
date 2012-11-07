@@ -269,6 +269,7 @@ namespace prep.specs
       };
     }
 
+
     public class when_sorting_movies : concern_for_searching_and_sorting
     {
       /* Look at the potential method explosion that can start to occur as you start to sort on different criteria
@@ -278,7 +279,9 @@ namespace prep.specs
 
       It should_be_able_to_sort_all_movies_by_title_descending = () =>
       {
-        var results = sut.sort_all_movies_by_title_descending();
+        var comparer = Order<Movie>.by_descending(x => x.title);
+
+        var results = sut.all_movies().sort_using(comparer);
 
         results.ShouldContainOnlyInOrder(theres_something_about_mary, the_ring, shrek,
                                          pirates_of_the_carribean, indiana_jones_and_the_temple_of_doom,

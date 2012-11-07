@@ -1,40 +1,31 @@
 namespace prep.utility.filtering
 {
-  public class MatchCreationExtensionPoint<TItemToFilter, TPropertyType, TReturnType> :
-    IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, TReturnType> 
+  public delegate IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, TDSLResult>
+    CreateMatchExtensionPointDecorator_Behaviour<TItemToFilter, TPropertyType, TDSLResult>(
+    IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, TDSLResult> original);
+
+  public class MatchFeatureExtensionPoint<TItemToFilter, TPropertyType, TReturnType> :
+    IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, TReturnType>
   {
-    PropertyAccessor<TItemToFilter, TPropertyType> accessor;
+    CreateTheDSLReturnType_Behaviour<TItemToFilter, TPropertyType, TReturnType> dsl_return_type_factory;
+    CreateMatchExtensionPointDecorator_Behaviour<TItemToFilter, TPropertyType, TReturnType> decorator_factory;
 
-    public MatchCreationExtensionPoint(PropertyAccessor<TItemToFilter, TPropertyType> accessor)
+    public MatchFeatureExtensionPoint(
+      CreateTheDSLReturnType_Behaviour<TItemToFilter, TPropertyType, TReturnType> dsl_return_type_factory,
+      CreateMatchExtensionPointDecorator_Behaviour<TItemToFilter, TPropertyType, TReturnType> decorator_factory)
     {
-      this.accessor = accessor;
+      this.dsl_return_type_factory = dsl_return_type_factory;
+      this.decorator_factory = decorator_factory;
     }
 
-    public IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IMatchAn<TItemToFilter>> not
+    public IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, TReturnType> not
     {
-      get { return new NegatingMatchCreationExtensionPoint(this); }
-    }
-
-    class NegatingMatchCreationExtensionPoint :
-      IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IMatchAn<TItemToFilter>>
-    {
-      IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IMatchAn<TItemToFilter>> original;
-
-      public NegatingMatchCreationExtensionPoint(
-        IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IMatchAn<TItemToFilter>> original)
-      {
-        this.original = original;
-      }
-
-      public IMatchAn<TItemToFilter> creating_dsl_result_using(IMatchAn<TPropertyType> real_criteria)
-      {
-        return original.creating_dsl_result_using(real_criteria).not();
-      }
+      get { return decorator_factory(this); }
     }
 
     public TReturnType creating_dsl_result_using(IMatchAn<TPropertyType> real_criteria)
     {
-      return new PropertyMatch<TItemToFilter, TPropertyType>(accessor, real_criteria);
+      return dsl_return_type_factory(real_criteria);
     }
   }
 }

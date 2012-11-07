@@ -20,5 +20,12 @@ namespace prep.utility
     {
       return items.all_items_matching(criteria.matches);
     }
+
+    public static IEnumerable<TItem> sort_using<TItem>(this IEnumerable<TItem> items,IComparer<TItem> comparer )
+    {
+      var list = new List<TItem>(items);
+      list.Sort(comparer);
+      return list;
+    }
   }
 }

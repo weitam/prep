@@ -19,27 +19,10 @@ namespace prep.utility.filtering
 
         public IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IEnumerable<TItemToFilter>> not
         {
-            get { return new NegatingEnumerableFilteringExtensionPoint(this); }
+            get { return new NegatingEnumerableFilteringExtensionPoint<TItemToFilter, TPropertyType>(this); }
         }
 
-        class NegatingEnumerableFilteringExtensionPoint :
-            IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IEnumerable<TItemToFilter>>
-        {
-            IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IEnumerable<TItemToFilter>> original;
-
-            public NegatingEnumerableFilteringExtensionPoint(
-                IProvideAccessToCreatingMatchers<TItemToFilter, TPropertyType, IEnumerable<TItemToFilter>> original)
-            {
-                this.original = original;
-            }
-
-            public IEnumerable<TItemToFilter> creating_dsl_result_using(IMatchAn<TPropertyType> real_criteria)
-            {
-                return original.creating_dsl_result_using(real_criteria.not());
-            }
-        }
-
-        public IEnumerable<TItemToFilter> creating_dsl_result_using(IMatchAn<TPropertyType> real_criteria)
+      public IEnumerable<TItemToFilter> creating_dsl_result_using(IMatchAn<TPropertyType> real_criteria)
         {
             return original_set.all_items_matching(match_creation_extension_point.creating_dsl_result_using(real_criteria));
         }
