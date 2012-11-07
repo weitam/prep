@@ -1,25 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace prep.utility.filtering
 {
-    //public delegate
-
-    public class Order<TTypeToSort>
+  public class Order<TTypeToSort>
+  {
+    public static IComparer<TTypeToSort> by_descending<TPropertyTypeToSortOn>(PropertyAccessor<TTypeToSort,TPropertyTypeToSortOn> accessor) where TPropertyTypeToSortOn : IComparable<TPropertyTypeToSortOn>
     {
-         public static IComparer<TTypeToSort> by_descending(PropertyAccessor<TTypeToSort, > property)
-         {
-             return new DescendingComparer<TTypeToSort>();
-         }
+      throw new NotImplementedException();
+    }
+    public static IComparer<TTypeToSort> by<TPropertyTypeToSortOn>(PropertyAccessor<TTypeToSort,TPropertyTypeToSortOn> accessor) where TPropertyTypeToSortOn : IComparable<TPropertyTypeToSortOn>
+    {
+      return new CustomComparer<TTypeToSort,TPropertyTypeToSortOn>(accessor);
+    }
+  }
+
+  public class CustomComparer<TTypeToSort,TPropertyTypeToSortOn> : IComparer<TTypeToSort> where TPropertyTypeToSortOn : IComparable<TPropertyTypeToSortOn>
+  {
+    PropertyAccessor<TTypeToSort, TPropertyTypeToSortOn> accessor;
+
+    public CustomComparer(PropertyAccessor<TTypeToSort, TPropertyTypeToSortOn> accessor)
+    {
+      this.accessor = accessor;
     }
 
-
-
-
-    public class DescendingComparer<TTypeToSort> : IComparer<TTypeToSort>
+    public int Compare(TTypeToSort x, TTypeToSort y)
     {
-        public int Compare(TTypeToSort x, TTypeToSort y)
-        {
-            return x
-        }
+      return accessor(x).CompareTo(accessor(y));
     }
+  }
 }
